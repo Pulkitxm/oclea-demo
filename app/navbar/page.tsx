@@ -4,7 +4,7 @@ import { navbarItems } from "./navbarItems";
 
 const page = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-gray-50">
       {/* Navigation */}
       <nav className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4">
@@ -21,7 +21,7 @@ const page = () => {
               <div className="hidden lg:flex items-center space-x-9 text-sm">
                 {navbarItems.map((option) => {
                   return (
-                    <a
+                    <a key={option.id}
                       href={option.path}
                       className="text-gray-700 text-sm hover:text-black"
                     >
