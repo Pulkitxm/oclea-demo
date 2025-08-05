@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Search, Menu, X } from "lucide-react";
 import { navbarItems } from "./navbarItems";
 
-const page = () => {
+const Page = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -83,4 +83,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
