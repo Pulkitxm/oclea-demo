@@ -1,4 +1,5 @@
 import React from "react";
+import ProductCard from "./ProductCard";
 
 const page = () => {
   return (
@@ -35,33 +36,6 @@ const page = () => {
             {/* iPhone Images */}
             <div className="relative max-w-5xl mx-auto">
               <div className="flex justify-center items-end space-x-4 md:space-x-8">
-                {/* iPhone Pro - Gold */}
-                {/* <div className="relative">
-                  <img 
-                    src="https://images.unsplash.com/photo-1695653424718-fee9827420b4?w=400&h=600&fit=crop&crop=center" 
-                    alt="iPhone 16 Pro in Natural Titanium"
-                    className="w-48 md:w-64 lg:w-80 h-auto object-contain"
-                  />
-                </div> */}
-
-                {/* iPhone - Blue (Center, slightly larger) */}
-                {/* <div className="relative transform scale-110">
-                  <img 
-                    src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=600&fit=crop&crop=center" 
-                    alt="iPhone 16 in Ultramarine"
-                    className="w-48 md:w-64 lg:w-80 h-auto object-contain"
-                  />
-                </div> */}
-
-                {/* iPhone - White */}
-                {/* <div className="relative">
-                  <img 
-                    src="https://images.unsplash.com/photo-1695048006968-ea93a39a700c?w=400&h=600&fit=crop&crop=center" 
-                    alt="iPhone 16 in White"
-                    className="w-48 md:w-64 lg:w-80 h-auto object-contain"
-                  />
-                </div> */}
-
                 <img
                   src="https://images.macrumors.com/t/NHloYA07lXYNraPhCHvmog9VT_M=/3840x/article-new/2025/03/Apple-iPhone-16-family-lineup.jpg"
                   alt="phone"
@@ -71,6 +45,57 @@ const page = () => {
           </div>
         </section>
       </main>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 p-5 w-full">
+        <ProductCard
+          title="iPad"
+          subtitle="Touch, draw, and type on one magical device."
+          description="Built for Apple Intelligence."
+          imageUrl="https://www.apple.com/v/ipad-pro/at/images/meta/ipad-pro_overview__b6jt6q2ohlsi_og.png?202506200138" // replace with actual path
+          textColor="text-white"
+          backgroundColor="bg-black"
+          buttontext="Shop iPad"
+        />
+        <ProductCard
+          title="MacBook Air"
+          subtitle="Sky blue color. Sky high performance with M4."
+          description="Built for Apple Intelligence."
+          imageUrl="https://www.apple.com/v/macbook-air/u/images/overview/hero/hero_endframe__c67cz35iy9me_large.png"
+          backgroundColor="bg-blue-50"
+          buttontext="Buy"
+        />
+        <ProductCard
+          title="WATCH SERIES 10"
+          subtitle="Thinstant classic."
+          imageUrl="https://www.apple.com/v/apple-watch-series-10/d/images/overview/welcome/welcome_hero_endframe__d71hj6st53gy_xlarge.jpg"
+          backgroundColor="bg-white"
+          buttontext="Buy"
+        />
+        <ProductCard
+          title="AirPods Pro 2"
+          subtitle="Now with a Hearing Aid feature."
+          imageUrl="https://www.apple.com/v/airpods-pro/d/images/meta/og__ch3csr9zmviq_overview.png"
+          textColor="text-white"
+          backgroundColor="bg-black"
+          buttontext="Buy"
+        />
+        <ProductCard
+          title="Trade In"
+          subtitle="Get $160-$600 in credit when you trade in iPhone."
+          imageUrl="https://istyle.ae/media/wysiwyg/AE/landing-pages/service/new-tradein-hero-iph15-v2.jpg"
+          textColor="text-black"
+          backgroundColor="bg-neutral-50"
+          buttontext="Trade Now"
+        />
+        <ProductCard
+          title="Card"
+          subtitle="Get upto 3% cashback with every purchase."
+          imageUrl="https://cdn1.expresscomputer.in/wp-content/uploads/2019/03/26085245/Apple-Card.jpg"
+          textColor="text-black"
+          backgroundColor="bg-neutral-50"
+          buttontext="Buy Card"
+        />
+      </div>
     </div>
   );
 };
