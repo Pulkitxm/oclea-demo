@@ -40,6 +40,14 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ showAll, onShowAllToggle, o
   const [jsonModalOpen, setJsonModalOpen] = useState(false);
   const [exportModalOpen, setExportModalOpen] = useState(false);
 
+  // Refresh button loader state
+  const [refreshLoading, setRefreshLoading] = useState(false);
+  const handleRefreshClick = () => {
+    if (refreshLoading) return;
+    setRefreshLoading(true);
+    setTimeout(() => setRefreshLoading(false), 1000);
+  };
+
   // Use canonical SUGGESTIONS array from AuditOverlay
   const allSuggestions = SUGGESTIONS;
 
@@ -280,6 +288,39 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ showAll, onShowAllToggle, o
                     >
                       {opt.icon && (
                         <opt.icon className="w-4 h-4 mr-1 text-gray-500" />
+                      )}
+                      {opt.label}
+                    </li>
+                  );
+                }
+                // Refresh option: show loader on click
+                if (opt.label === 'Refresh') {
+                  return (
+                    <li
+                      key={opt.label}
+                      className={`flex items-center gap-2 text-sm font-medium text-gray-700 rounded-full 
+                        px-3 py-1.5 cursor-pointer select-none whitespace-nowrap
+                        transition-all duration-300
+                        hover:scale-105 active:scale-95
+                        transform ${animationStage === 'open' ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0'}
+                        relative
+                      `}
+                      style={{ 
+                        transitionDelay: `${index * 30}ms`,
+                        fontWeight: 500, 
+                        letterSpacing: '0.01em' 
+                      }}
+                      onClick={e => {
+                        e.stopPropagation();
+                        handleRefreshClick();
+                      }}
+                    >
+                      {refreshLoading ? (
+                        <span className="w-4 h-4 mr-1 flex items-center justify-center">
+                          <span className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin block"></span>
+                        </span>
+                      ) : (
+                        opt.icon && <opt.icon className="w-4 h-4 mr-1 text-gray-500" />
                       )}
                       {opt.label}
                     </li>
