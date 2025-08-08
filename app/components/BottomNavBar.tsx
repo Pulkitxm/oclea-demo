@@ -1,5 +1,9 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import ChatModal from './ChatModal';
+import SuggestionsJsonModal from './SuggestionsJsonModal';
+import { SUGGESTIONS } from './AuditOverlay';
+import ExportModal from './ExportModal';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import {
   EyeOff,
@@ -32,6 +36,20 @@ const navOptions = [
 const BottomNavBar: React.FC<BottomNavBarProps> = ({ showAll, onShowAllToggle, onNavOpenChange, onSuggestionsClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [animationStage, setAnimationStage] = useState<'closed' | 'capsule' | 'expanding' | 'open' | 'collapsing'>('closed');
+  const [chatModalOpen, setChatModalOpen] = useState(false);
+  const [jsonModalOpen, setJsonModalOpen] = useState(false);
+  const [exportModalOpen, setExportModalOpen] = useState(false);
+
+  // Use canonical SUGGESTIONS array from AuditOverlay
+  const allSuggestions = SUGGESTIONS;
+
+
+
+
+  // Close modals if nav closes
+  useEffect(() => {
+    if (!isOpen) setChatModalOpen(false);
+  }, [isOpen]);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -42,6 +60,7 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ showAll, onShowAllToggle, o
   const handleClose = () => {
     setAnimationStage('collapsing');
     if (onNavOpenChange) onNavOpenChange(false);
+    setChatModalOpen(false);
   };
 
   useEffect(() => {
@@ -142,6 +161,7 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ showAll, onShowAllToggle, o
             animationStage === 'open' ? 'opacity-100' : 'opacity-0'
           }`}>
             <ul className="flex items-center gap-3 m-0 p-0 list-none px-4">
+
               {navOptions.map((opt, index) => {
                 // First option is Show All/Hide All
                 if (opt.isShowAll) {
@@ -166,6 +186,105 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ showAll, onShowAllToggle, o
                     </li>
                   );
                 }
+                // Chat option: open submenu
+                if (opt.label === 'Chat') {
+                  return (
+                    <li
+                      key={opt.label}
+                      data-chat-btn
+                      className={`flex items-center gap-2 text-sm font-medium text-gray-700 rounded-full 
+                        px-3 py-1.5 cursor-pointer select-none whitespace-nowrap
+                        transition-all duration-300
+                        hover:scale-105 active:scale-95
+                        transform ${animationStage === 'open' ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0'}
+                        relative
+                      `}
+                      style={{ 
+                        transitionDelay: `${index * 30}ms`,
+                        fontWeight: 500, 
+                        letterSpacing: '0.01em' 
+                      }}
+                      onClick={e => {
+                        e.stopPropagation();
+                        setChatModalOpen((open) => {
+                          if (open) return false; // If open, close only
+                          return true; // If closed, open
+                        });
+                      }}
+                    >
+                      {opt.icon && (
+                        <opt.icon className="w-4 h-4 mr-1 text-gray-500" />
+                      )}
+                      {opt.label}
+                    </li>
+                  );
+                }
+                // JSON option: open/close JSON modal
+                if (opt.label === 'JSON') {
+                  return (
+                    <li
+                      key={opt.label}
+                      data-json-btn
+                      className={`flex items-center gap-2 text-sm font-medium text-gray-700 rounded-full 
+                        px-3 py-1.5 cursor-pointer select-none whitespace-nowrap
+                        transition-all duration-300
+                        hover:scale-105 active:scale-95
+                        transform ${animationStage === 'open' ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0'}
+                        relative
+                      `}
+                      style={{ 
+                        transitionDelay: `${index * 30}ms`,
+                        fontWeight: 500, 
+                        letterSpacing: '0.01em' 
+                      }}
+                      onClick={e => {
+                        e.stopPropagation();
+                        setJsonModalOpen((open) => {
+                          if (open) return false;
+                          return true;
+                        });
+                      }}
+                    >
+                      {opt.icon && (
+                        <opt.icon className="w-4 h-4 mr-1 text-gray-500" />
+                      )}
+                      {opt.label}
+                    </li>
+                  );
+                }
+                // Export option: open/close Export modal
+                if (opt.label === 'Export') {
+                  return (
+                    <li
+                      key={opt.label}
+                      data-export-btn
+                      className={`flex items-center gap-2 text-sm font-medium text-gray-700 rounded-full 
+                        px-3 py-1.5 cursor-pointer select-none whitespace-nowrap
+                        transition-all duration-300
+                        hover:scale-105 active:scale-95
+                        transform ${animationStage === 'open' ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0'}
+                        relative
+                      `}
+                      style={{ 
+                        transitionDelay: `${index * 30}ms`,
+                        fontWeight: 500, 
+                        letterSpacing: '0.01em' 
+                      }}
+                      onClick={e => {
+                        e.stopPropagation();
+                        setExportModalOpen((open) => {
+                          if (open) return false;
+                          return true;
+                        });
+                      }}
+                    >
+                      {opt.icon && (
+                        <opt.icon className="w-4 h-4 mr-1 text-gray-500" />
+                      )}
+                      {opt.label}
+                    </li>
+                  );
+                }
                 return (
                   <li
                     key={opt.label}
@@ -181,7 +300,20 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ showAll, onShowAllToggle, o
                       fontWeight: 500, 
                       letterSpacing: '0.01em' 
                     }}
-                    onClick={opt.label === 'Suggestions' && onSuggestionsClick ? onSuggestionsClick : undefined}
+                    onClick={opt.label === 'Suggestions' && onSuggestionsClick ? (() => {
+                      if (typeof window !== 'undefined') {
+                        const modal = document.querySelector('.suggestions-modal-open');
+                        if (modal) {
+                          window.dispatchEvent(new CustomEvent('close-suggestions-modal'));
+                          return;
+                        }
+                        if (typeof onSuggestionsClick === 'function') {
+                          onSuggestionsClick();
+                          return;
+                        }
+                      }
+                      if (typeof onSuggestionsClick === 'function') onSuggestionsClick();
+                    }) : undefined}
                   >
                     {opt.icon && (
                       <opt.icon className="w-4 h-4 mr-1 text-gray-500" />
@@ -217,6 +349,18 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ showAll, onShowAllToggle, o
             </div>
           )}
         </nav>
+      )}
+      {/* Chat modal rendered at root level for correct animation and click-away */}
+      {chatModalOpen && (
+        <ChatModal onClose={() => setChatModalOpen(false)} />
+      )}
+      {/* JSON modal rendered at root level for correct animation and click-away */}
+      {jsonModalOpen && (
+        <SuggestionsJsonModal suggestions={allSuggestions} onClose={() => setJsonModalOpen(false)} />
+      )}
+      {/* Export modal rendered at root level for correct animation and click-away */}
+      {exportModalOpen && (
+        <ExportModal suggestions={allSuggestions} onClose={() => setExportModalOpen(false)} />
       )}
     </>
   );

@@ -9,7 +9,7 @@ type AuditPoint = {
 import React, { useState, useEffect } from 'react';
 
 // Generate audit points scattered across the full scrollable page
-const SUGGESTIONS = [
+export const SUGGESTIONS = [
   'Add skip navigation link for keyboard users to jump directly to main content.',
   'Consider adding search suggestions dropdown for better user guidance.',
   'Add a sticky header for easier navigation.',
