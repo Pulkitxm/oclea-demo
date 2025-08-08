@@ -96,11 +96,11 @@ export function usePersistentAuditPoints(count: number): AuditPoint[] {
 interface AuditOverlayProps {
   showAll: boolean;
   onBubbleClick: (id: number) => void;
-  openIds: number[];
+  // openIds: number[]; // removed unused prop
 }
 
 
-const AuditOverlay: React.FC<AuditOverlayProps> = ({ showAll, onBubbleClick, openIds }) => {
+const AuditOverlay: React.FC<AuditOverlayProps> = ({ showAll, onBubbleClick }) => {
   const auditPoints = usePersistentAuditPoints(18);
   const [rejected, setRejected] = useState<number[]>([]);
   // Only one box open at a time (by id), or null for all bubbles

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 type ProductCardProps = {
   title: string;
@@ -46,7 +47,7 @@ export default function ProductCard({
         )} */}
       </div>
       <div className="flex justify-center items-end flex-1 w-full">
-        <img src={imageUrl} alt={title} />
+        <Image src={imageUrl} alt={title} width={400} height={300} style={{ objectFit: 'contain' }} />
       </div>
     </div>
   );

@@ -46,7 +46,9 @@ const ChatModal: React.FC<ChatModalProps> = ({ onClose }) => {
       await navigator.clipboard.writeText(allSuggestions.join('\n'));
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
-    } catch (e) {}
+    } catch {
+      // ignore
+    }
   };
 
   if (!coords) return null;

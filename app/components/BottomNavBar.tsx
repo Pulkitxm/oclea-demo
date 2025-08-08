@@ -1,18 +1,16 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChatModal from './ChatModal';
 import SuggestionsJsonModal from './SuggestionsJsonModal';
 import { SUGGESTIONS } from './AuditOverlay';
 import ExportModal from './ExportModal';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import {
-  EyeOff,
   List,
   MessageSquare,
   Download,
   RefreshCw,
   FileText,
-  Users,
   LayoutList,
 } from 'lucide-react';
 
