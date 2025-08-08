@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: [
+      "images.macrumors.com",
+      "www.apple.com",
+      "istyle.ae",
+      "cdn1.expresscomputer.in"
+    ],
+  },
 };
 
 export default nextConfig;

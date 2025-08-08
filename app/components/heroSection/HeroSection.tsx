@@ -1,5 +1,6 @@
 import React from "react";
 import ProductCard from "./ProductCard";
+import Image from "next/image";
 
 const page = () => {
   return (
@@ -36,9 +37,12 @@ const page = () => {
             {/* iPhone Images */}
             <div className="relative max-w-5xl mx-auto">
               <div className="flex justify-center items-end space-x-4 md:space-x-8">
-                <img
+                <Image
                   src="https://images.macrumors.com/t/NHloYA07lXYNraPhCHvmog9VT_M=/3840x/article-new/2025/03/Apple-iPhone-16-family-lineup.jpg"
                   alt="phone"
+                  width={800}
+                  height={400}
+                  style={{ objectFit: 'contain' }}
                 />
               </div>
             </div>
