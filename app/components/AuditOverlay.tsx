@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from 'react';
+
 // Type for audit point
 type AuditPoint = {
   id: number;
@@ -6,7 +8,6 @@ type AuditPoint = {
   left: number;
   suggestion: string;
 };
-import React, { useState, useEffect } from 'react';
 
 // Generate audit points scattered across the full scrollable page
 export const SUGGESTIONS = [
