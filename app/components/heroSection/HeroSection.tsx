@@ -42,7 +42,7 @@ const page = () => {
                   alt="phone"
                   width={800}
                   height={400}
-                  style={{ objectFit: 'contain' }}
+                  style={{ objectFit: "contain" }}
                 />
               </div>
             </div>

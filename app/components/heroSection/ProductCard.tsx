@@ -47,7 +47,13 @@ export default function ProductCard({
         )} */}
       </div>
       <div className="flex justify-center items-end flex-1 w-full">
-        <Image src={imageUrl} alt={title} width={400} height={300} style={{ objectFit: 'contain' }} />
+        <Image
+          src={imageUrl}
+          alt={title}
+          width={400}
+          height={300}
+          style={{ objectFit: "contain" }}
+        />
       </div>
     </div>
   );
