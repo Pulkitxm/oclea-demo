@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaChevronDown } from 'react-icons/fa';
+import { FaChevronDown } from "react-icons/fa";
 
 interface SuggestionsJsonModalProps {
   onClose: () => void;
@@ -22,20 +22,25 @@ function generateSuggestionObjects(suggestions: string[]) {
   }));
 }
 
-const SuggestionsJsonModal: React.FC<SuggestionsJsonModalProps> = ({ onClose, suggestions }) => {
-  const [coords, setCoords] = useState<{left: number, bottom: number} | null>(null);
+const SuggestionsJsonModal: React.FC<SuggestionsJsonModalProps> = ({
+  onClose,
+  suggestions,
+}) => {
+  const [coords, setCoords] = useState<{ left: number; bottom: number } | null>(
+    null
+  );
   const [show, setShow] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const suggestionObjects = generateSuggestionObjects(suggestions);
 
   // Find the JSON nav button and get its position
   useEffect(() => {
-    const btn = document.querySelector('[data-json-btn]');
+    const btn = document.querySelector("[data-json-btn]");
     if (btn) {
       const rect = btn.getBoundingClientRect();
       setCoords({
         left: rect.left + rect.width / 2,
-        bottom: window.innerHeight - rect.top + 24
+        bottom: window.innerHeight - rect.top + 24,
       });
       setTimeout(() => setShow(true), 10);
     }
@@ -44,10 +49,16 @@ const SuggestionsJsonModal: React.FC<SuggestionsJsonModalProps> = ({ onClose, su
   // Close on click outside
   useEffect(() => {
     function handle(e: MouseEvent) {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) onClose();
+      // Don't close if clicking on the JSON button itself
+      const target = e.target as Element;
+      const jsonBtn = target.closest("[data-json-btn]");
+      if (jsonBtn) return;
+
+      if (modalRef.current && !modalRef.current.contains(e.target as Node))
+        onClose();
     }
-    document.addEventListener('mousedown', handle);
-    return () => document.removeEventListener('mousedown', handle);
+    document.addEventListener("mousedown", handle);
+    return () => document.removeEventListener("mousedown", handle);
   }, [onClose]);
 
   if (!coords) return null;
@@ -60,12 +71,16 @@ const SuggestionsJsonModal: React.FC<SuggestionsJsonModalProps> = ({ onClose, su
         ref={modalRef}
         className={`absolute left-1/2 transition-all duration-500 ease-[cubic-bezier(.22,1,.36,1)] pointer-events-auto
           bg-gradient-to-br from-[#f8fafc] to-[#e0e7ff] shadow-2xl w-[540px] max-w-full max-h-[70vh] pb-6 pt-5 px-6 border border-blue-200 flex flex-col rounded-2xl
-          ${show ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'}`}
+          ${
+            show
+              ? "opacity-100 scale-100 translate-y-0"
+              : "opacity-0 scale-95 translate-y-4"
+          }`}
         style={{
-          left: '50%',
-          bottom: '90px', // just above navbar
-          transform: 'translateX(-50%)',
-          transformOrigin: 'bottom center',
+          left: "50%",
+          bottom: "90px", // just above navbar
+          transform: "translateX(-50%)",
+          transformOrigin: "bottom center",
         }}
       >
         <button
@@ -75,7 +90,9 @@ const SuggestionsJsonModal: React.FC<SuggestionsJsonModalProps> = ({ onClose, su
         >
           <FaChevronDown className="text-sm transition-transform duration-200 group-hover:transform group-hover:translate-y-0.5" />
         </button>
-        <h2 className="text-base font-bold mb-3 text-blue-800">Suggestions JSON View</h2>
+        <h2 className="text-base font-bold mb-3 text-blue-800">
+          Suggestions JSON View
+        </h2>
         <div className="overflow-y-auto flex-1 pr-1">
           <pre className="bg-[#23263a] text-[#e6e6e6] rounded-xl p-4 text-xs whitespace-pre-wrap border border-[#2d3250]">
             {JSON.stringify(suggestionObjects, null, 2)}
